@@ -1,0 +1,18 @@
+stages:
+  - build
+
+build_job:
+  image: node:14.18.0
+  stage: build
+
+  script:
+    - node -v
+    - ls /gitlab-runner/config
+    - ls ~/.ssh
+    - pwd
+    - cp /gitlab-runner/config/config.js ./
+    - yarn install
+    - npm run test
+    - npm start
+  tags:
+    - nownews-docker-runner
