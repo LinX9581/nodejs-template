@@ -2,7 +2,7 @@
 ```
 git clone https://github.com/LinX9581/nodejs-template.git
 cd nodejs-template
-echo "export default { mysql: {host: '172.20.11.22',user: 'dev',password: '00000000'},}" >> config.js
+echo -e "db_host=172.16.200.6\ndb_user=docker\ndb_password=00000000" > .env
 yarn install
 npm start
 ```
