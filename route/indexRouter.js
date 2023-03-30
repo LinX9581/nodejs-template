@@ -2,7 +2,8 @@ import query from '../mysql-connect';
 import express from 'express';
 import moment from 'moment';
 
-getMysqlUser()
+console.log(process.env.USER);
+// getMysqlUser()
 async function getMysqlUser() {
     const user = await query('SELECT User, Host FROM mysql.user;')
     console.log(user);
