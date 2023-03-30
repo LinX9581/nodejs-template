@@ -17,7 +17,7 @@ app.use(express.static('public'));
 app.use('/', indexRouter);
 
 const host = '0.0.0.0';
-const port = process.env.PORT || 3005;
+const port = process.env.PORT || 3006;
 
 http.listen(port, host, function() {
     console.log("Server started on " + port);
