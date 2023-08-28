@@ -4,6 +4,7 @@ import cors from 'cors';
 import 'dotenv/config';
 import './global'
 import indexRouter from './route/indexRouter';
+import reportRouter from './route/reportRouter';
 import './schedule/schedule';
 const app = express();
 const http = require('http').Server(app);
@@ -16,6 +17,7 @@ app.use(cors());
 app.use(express.static('public'));
 
 app.use('/', indexRouter);
+app.use('/report', reportRouter);
 
 const host = '0.0.0.0';
 const port = process.env.PORT || 3008;
