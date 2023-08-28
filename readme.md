@@ -9,33 +9,31 @@ npm start
 * basic env
 express ejs mysql babel global-config docker gitlabci
 
-# build image
-注意: 
-ignore node_modules config.js config.js need to mount
+## Docker
+* build image
 ```
 docker build -t nodejs-template:1.0 . --no-cache
 ```
-
-# image to container
+* image to container
 ```
 cd /nodejs-template
 docker run -itd -v ./config.js:/usr/src/app/config.js --name nodejs-template -p 3005:3005 nodejs-template:1.0
 ```
-# ssh to container
+* ssh to container
 ```
 docker exec -it nodejs-template bash
 ```
-# get container realtime logs
+* get container realtime logs
 ```
 docker logs --follow nodejs-template
 ```
-# image push to docker hub
+* image push to docker hub
 ```
 docker login
 docker tag nodejs-template:1.0 linx9581/nodejs-template:1.0
 docker push linx9581/nodejs-template:1.0
 ```
-# image to gcr
+## push image to gcr
 ```
 gcloud config set project phonic-entity-320408
 gcloud auth activate-service-account --key-file json
@@ -49,7 +47,7 @@ docker push [HOSTNAME]/[PROJECT-ID]/[IMAGE]:[TAG]
 
 ```
 
-# Build Private Registry
+## Build Private Registry
 ```
 docker run -d -p 3008:5000 -v /docker/registry:/var/lib/registry --name registry registry:2
 cat>/etc/docker/daemon.json<<EOF
