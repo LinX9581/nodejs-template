@@ -9,6 +9,8 @@ import './schedule/schedule';
 const app = express();
 const http = require('http').Server(app);
 
+console.log(process.env.NODE_ENV)
+
 app.set("views", "views/");
 app.set("view engine", "ejs");
 app.use(bodyParser.json());
@@ -20,7 +22,7 @@ app.use('/', indexRouter);
 app.use('/report', reportRouter);
 
 const host = '0.0.0.0';
-const port = process.env.PORT || 3008;
+const port = process.env.PORT || 3013;
 
 http.listen(port, host, function() {
     console.log("Server started on " + port);

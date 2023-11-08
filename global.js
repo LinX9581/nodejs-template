@@ -1,5 +1,5 @@
-import config from './config'
-global.config = config
+import globalConfig from './config/index'
+global.globalConfig = globalConfig
 global.moment = require('moment')
 global.schedule = require('node-schedule')
 global.fs = require('fs')
