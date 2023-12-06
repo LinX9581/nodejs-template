@@ -2,7 +2,14 @@
 ```
 git clone https://github.com/LinX9581/nodejs-template.git
 cd nodejs-template
-echo -e "db_host=172.16.200.6\ndb_user=docker\ndb_password=00000000" > .env
+cat>.env<<EOF
+db_host=172.16.200.6
+db_user=docker
+db_password=00000000
+port_test = 4006
+port_dev = 4007
+port_prod = 3005
+EOF
 yarn install
 npm start
 ```
@@ -17,7 +24,7 @@ docker build -t nodejs-template:1.0 . --no-cache
 * image to container
 ```
 cd /nodejs-template
-docker run -itd -v ./config.js:/usr/src/app/config.js --name nodejs-template -p 3005:3005 nodejs-template:1.0
+docker run -itd -v ./.env:/usr/src/app/.env --name nodejs-template -p 3005:3005 nodejs-template:1.0
 ```
 * ssh to container
 ```

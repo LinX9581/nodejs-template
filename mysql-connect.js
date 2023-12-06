@@ -1,8 +1,8 @@
 const Mysql = require('mysql2/promise');
 const pool = Mysql.createPool({
-    host: process.env.db_host,
-    user: process.env.db_user,
-    password: process.env.db_password,
+    host: config.mysql.host,
+    user: config.mysql.user,
+    password: config.mysql.password,
 });
 let query = async function(query, data) {
     try {

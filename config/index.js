@@ -3,15 +3,15 @@ import developmentConfig from './development';
 import testConfig from './test';
 import productionConfig from './production';
 
-// 默认配置
+// 默認配置
 const defaultConfig = {
-  // 一些默认设置
+  
 };
 
-// 获取环境变量
+// 預設環境變數為 development
 const environment = process.env.NODE_ENV || 'development';
 
-// 根据环境变量选择配置
+// 根據環境變數，載入對應的環境配置
 const envConfig = (() => {
   switch (environment) {
     case 'development':
@@ -25,10 +25,9 @@ const envConfig = (() => {
   }
 })();
 
-// 合并配置对象（默认配置和环境特定配置）
-const globalConfig = {
+const config = {
   ...defaultConfig,
   ...envConfig,
 };
-
-export default globalConfig;
+console.log(config)
+export default config;

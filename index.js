@@ -22,7 +22,7 @@ app.use('/', indexRouter);
 app.use('/report', reportRouter);
 
 const host = '0.0.0.0';
-const port = process.env.PORT || 3013;
+const port = config.port || 3005;
 
 http.listen(port, host, function() {
     console.log("Server started on " + port);
