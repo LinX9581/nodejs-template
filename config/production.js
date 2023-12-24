@@ -4,5 +4,5 @@ export default {
     user: process.env.db_user,
     password: process.env.db_password,
   },
-  port: process.env.port_prod,
+  port: process.env.port,
 };

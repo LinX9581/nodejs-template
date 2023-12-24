@@ -40,19 +40,21 @@ docker login
 docker tag nodejs-template:1.0 linx9581/nodejs-template:1.0
 docker push linx9581/nodejs-template:1.0
 ```
-## push image to gcr
+## push image to artifactory registry
 ```
-gcloud config set project phonic-entity-320408
-gcloud auth activate-service-account --key-file json
-gcloud auth configure-docker
+gcloud auth activate-service-account --key-file project-name.json
+gcloud config set project project-name
+gcloud auth configure-docker asia-docker.pkg.dev
 
-docker tag linx9581/nodejs-template:1.0 asia.gcr.io/phonic-entity-320408/linx9581/nodejs-template:1.0
-docker tag [SOURCE_IMAGE] [HOSTNAME]/[PROJECT-ID]/[IMAGE]:[TAG]
-
-docker push asia.gcr.io/phonic-entity-320408/linx9581/nodejs-template:1.0
-docker push [HOSTNAME]/[PROJECT-ID]/[IMAGE]:[TAG]
+gcloud artifacts repositories create nodejs-repo --repository-format=docker --location=asia --description="Docker repository"
+docker build -t asia-docker.pkg.dev/project-name/nodejs-repo/nodejs-template:4.6 . --no-cache
+docker push asia-docker.pkg.dev/project-name/nodejs-repo/nodejs-template:4.6
 
 ```
+## push to cloud run
+gcloud run deploy my-service5 --image=asia-docker.pkg.dev/project-name/nodejs-repo/nodejs-template:4.6 --region=asia-east1 --platform=managed --allow-unauthenticated --memory=512Mi --cpu=1 --max-instances=3 --timeout=10m --concurrency=1 --set-env-vars=db_user=dev,db_password=00000000
+
+敏感資料應該放 secret manager
 
 ## Build Private Registry
 ```
