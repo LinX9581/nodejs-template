@@ -10,11 +10,11 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     # 確保運行器的環境變數 PATH 包含 nvm 安裝的 Node.js 路徑
-    - name: Setup Node.js environment
-      run: |
-        echo "Loading nvm"
-        . $NVM_DIR/nvm.sh
-        nvm use 16
+    # - name: Setup Node.js environment
+    #   run: |
+    #     echo "Loading nvm"
+    #     . $NVM_DIR/nvm.sh
+    #     nvm use 16
     - name: Install dependencies
       run: npm install
     - name: Run tests
