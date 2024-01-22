@@ -7,14 +7,16 @@ jobs:
 
     runs-on: self-hosted
 
+    strategy:
+      matrix:
+        node-version: [16.x]  # 或您項目所需的 Node.js 版本
+
     steps:
     - uses: actions/checkout@v2
-    # 確保運行器的環境變數 PATH 包含 nvm 安裝的 Node.js 路徑
-    # - name: Setup Node.js environment
-    #   run: |
-    #     echo "Loading nvm"
-    #     . $NVM_DIR/nvm.sh
-    #     nvm use 16
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v2
+      with:
+        node-version: ${{ matrix.node-version }}
     - name: Install dependencies
       run: npm install
     - name: Run tests
