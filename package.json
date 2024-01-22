@@ -9,6 +9,12 @@
     "start:test": "NODE_ENV=test nodemon --exec babel-node index.js",
     "test": "npx jest"
   },
+  "jest": {
+    "testPathIgnorePatterns": [
+      "/node_modules/",
+      "<rootDir>/config/"
+    ]
+  },
   "dependencies": {
     "body-parser": "^1.20.1",
     "child_process": "^1.0.2",
