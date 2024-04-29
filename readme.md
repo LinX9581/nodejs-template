@@ -8,6 +8,8 @@ cat>.env<<EOF
 db_host=172.16.200.6
 db_user=docker
 db_password=00000000
+db_password_test=00000000
+db_password_dev=00000000
 port_test = 4006
 port_dev = 4007
 port_prod = 3005

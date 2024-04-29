@@ -11,6 +11,7 @@ const app = express();
 const http = require('http').Server(app);
 
 console.log(process.env.NODE_ENV)
+console.log(config)
 
 app.set("views", "views/");
 app.set("view engine", "ejs");
