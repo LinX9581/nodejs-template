@@ -1,4 +1,6 @@
 # start
+For Linux  
+
 ```
 git clone https://github.com/LinX9581/nodejs-template.git
 cd nodejs-template
@@ -13,6 +15,9 @@ EOF
 yarn install
 npm start
 ```
+* default config  
+./nodejs-template/config/development.js  
+
 * basic env
 express ejs mysql babel global-config docker gitlabci
 
