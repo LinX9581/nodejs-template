@@ -5,7 +5,6 @@ import 'dotenv/config';
 import './global'
 import indexRouter from './route/indexRouter';
 import reportRouter from './route/reportRouter';
-import fileRouter from './route/fileRouter';
 import './schedule/schedule';
 const app = express();
 const http = require('http').Server(app);
@@ -22,7 +21,6 @@ app.use(express.static('public'));
 
 app.use('/', indexRouter);
 app.use('/report', reportRouter);
-app.use('/file', fileRouter);
 
 const host = '0.0.0.0';
 const port = process.env.PORT || config.port || 3005;
