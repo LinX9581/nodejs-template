@@ -26,12 +26,12 @@ express ejs mysql babel global-config docker gitlabci
 ## Docker
 * build image
 ```
-docker build -t nodejs-template:1.0 . --no-cache
+docker build -t nodejs-template:1.3 . --no-cache
 ```
 * image to container
 ```
 cd /nodejs-template
-docker run -itd -v ./.env:/usr/src/app/.env --name nodejs-template -p 3005:3005 nodejs-template:1.0
+docker run -itd -v ./.env:/usr/src/app/.env --name nodejs-template -p 3011:3005 nodejs-template:1.3
 ```
 * ssh to container
 ```
@@ -44,8 +44,8 @@ docker logs --follow nodejs-template
 * image push to docker hub
 ```
 docker login
-docker tag nodejs-template:1.0 linx9581/nodejs-template:1.0
-docker push linx9581/nodejs-template:1.0
+docker tag nodejs-template:1.3 linx9581/nodejs-template:1.3
+docker push linx9581/nodejs-template:1.3
 ```
 ## push image to artifactory registry
 ```
