@@ -7,6 +7,12 @@ jobs:
 
     runs-on: self-hosted
     environment: GAR
+    env:
+      GCP_PROJECT_NAME: ${{ vars.GAR }}
+      AR_PROJECT_NAME: nodejs-repo
+      PROJECT_NAME: nodejs-template
+      APP_VERSION: 1.8
+      CLOUDRUN_SERVICE: my-service1
 
     strategy:
       matrix:
@@ -18,9 +24,5 @@ jobs:
       uses: actions/setup-node@v2
       with:
         node-version: ${{ matrix.node-version }}
-    - name: Install dependencies
-      run: ls -l
-    - name: Install dependencies1
-      run: echo "The value is ${{ vars.GAR }}"
-    # - name: Run tests
-      # run: gcloud compute instances list
+    - name: sh
+      run: sh push_to_cloudrun.sh

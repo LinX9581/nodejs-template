@@ -1,8 +1,8 @@
-GCP_PROJECT_NAME=analytics
-AR_PROJECT_NAME=nodejs-repo
-PROJECT_NAME=nodejs-template
-APP_VERSION=1.8
-CLOUDRUN_SERVICE=my-service1
+# GCP_PROJECT_NAME=analytics
+# AR_PROJECT_NAME=nodejs-repo
+# PROJECT_NAME=nodejs-template
+# APP_VERSION=1.8
+# CLOUDRUN_SERVICE=my-service1
 
 gcloud auth activate-service-account --key-file $PROJECT_NAME.json
 gcloud config set project $GCP_PROJECT_NAME
