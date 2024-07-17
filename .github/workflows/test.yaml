@@ -20,6 +20,6 @@ jobs:
     - name: Install dependencies
       run: ls -l
     - name: Install dependencies1
-      run: gcloud config set project nownews-analytics
-    - name: Run tests
-      run: gcloud compute instances list
+      run: echo "The value is ${{ vars.GAR }}"
+    # - name: Run tests
+      # run: gcloud compute instances list
