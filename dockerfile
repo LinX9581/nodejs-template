@@ -1,16 +1,23 @@
 # Base image
-FROM node:latest
+FROM node:18-alpine
+
 # Create app directory
 WORKDIR /usr/src/app
 
-# Install app dependencies
-COPY package.json yarn.lock /usr/src/app/
-RUN yarn install && yarn cache clean
+# Copy package.json and yarn.lock
+COPY package.json yarn.lock ./
 
-# Bundle app source
-COPY . /usr/src/app
+# Install dependencies
+RUN yarn install --frozen-lockfile && yarn cache clean
 
-# Declaring PROT in containers
-EXPOSE 3008
-CMD [ "yarn", "start" ]
+# Copy the rest of the application code
+COPY . .
 
+# Build the application if needed (uncomment if you have a build step)
+# RUN yarn build
+
+# Expose the port the app runs on
+EXPOSE 3011
+
+# Start the application
+CMD ["yarn", "start"]

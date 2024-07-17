@@ -8,30 +8,27 @@ cat>.env<<EOF
 db_host=172.16.200.6
 db_user=docker
 db_password=00000000
-db_password_test=00000000
-db_password_dev=00000000
-port_test = 4006
-port_dev = 4007
-port_prod = 3005
+port = 3005
 EOF
 yarn install
 npm start
 ```
 * default config  
-./nodejs-template/config/development.js  
+./nodejs-template/config/production.js  
 
 * basic env
-express ejs mysql babel global-config docker gitlabci
+express ejs mysql babel global-config docker gitlabci 
+githubci to ar
 
 ## Docker
 * build image
 ```
-docker build -t nodejs-template:1.3 . --no-cache
+docker build -t nodejs-template:1.4 . --no-cache
 ```
 * image to container
 ```
 cd /nodejs-template
-docker run -itd -v ./.env:/usr/src/app/.env --name nodejs-template -p 3011:3005 nodejs-template:1.3
+docker run -itd -v ./.env:/usr/src/app/.env --name nodejs-template -p 3011:3011 nodejs-template:1.4
 ```
 * ssh to container
 ```
@@ -44,24 +41,9 @@ docker logs --follow nodejs-template
 * image push to docker hub
 ```
 docker login
-docker tag nodejs-template:1.3 linx9581/nodejs-template:1.3
-docker push linx9581/nodejs-template:1.3
+docker tag nodejs-template:1.4 linx9581/nodejs-template:1.4
+docker push linx9581/nodejs-template:1.4
 ```
-## push image to artifactory registry
-```
-gcloud auth activate-service-account --key-file project-name.json
-gcloud config set project project-name
-gcloud auth configure-docker asia-docker.pkg.dev
-
-gcloud artifacts repositories create nodejs-repo --repository-format=docker --location=asia --description="Docker repository"
-docker build -t asia-docker.pkg.dev/project-name/nodejs-repo/nodejs-template:4.6 . --no-cache
-docker push asia-docker.pkg.dev/project-name/nodejs-repo/nodejs-template:4.6
-
-```
-## push to cloud run
-gcloud run deploy my-service5 --image=asia-docker.pkg.dev/project-name/nodejs-repo/nodejs-template:4.6 --region=asia-east1 --platform=managed --allow-unauthenticated --memory=512Mi --cpu=1 --max-instances=3 --timeout=10m --concurrency=1 --set-env-vars=db_user=dev,db_password=00000000
-
-敏感資料應該放 secret manager
 
 ## Build Private Registry
 ```
