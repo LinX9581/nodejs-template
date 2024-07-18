@@ -49,6 +49,7 @@ jobs:
         curl -X POST ${{ secrets.PUSH_STATUS_WEBHOOK_URL }} \
           -H "Content-Type: application/json" \
           -d '{
+            "project": "${{ env.PROJECT_NAME }}",
             "status": "success",
             "version": "${{ env.APP_VERSION }}",
             "message": "Deployment successful"
@@ -60,6 +61,7 @@ jobs:
         curl -X POST ${{ secrets.PUSH_STATUS_WEBHOOK_URL }} \
           -H "Content-Type: application/json" \
           -d '{
+            "project": "${{ env.PROJECT_NAME }}",
             "status": "failure",
             "version": "${{ env.APP_VERSION }}",
             "message": "Deployment failed"
