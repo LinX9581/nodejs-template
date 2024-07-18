@@ -1,6 +1,10 @@
 name: Node.js CI
 
-on: [push, pull_request]
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
 
 jobs:
   build:
@@ -11,7 +15,7 @@ jobs:
       GCP_PROJECT_NAME: ${{ vars.GAR }}
       AR_PROJECT_NAME: nodejs-repo
       PROJECT_NAME: nodejs-template
-      APP_VERSION: 2.2
+      APP_VERSION: 2.3
       CLOUDRUN_SERVICE: my-service1
 
     strategy:
@@ -20,9 +24,43 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
+      with:
+        fetch-depth: 0  # Fetch all history for all tags and branches
+
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v2
       with:
         node-version: ${{ matrix.node-version }}
+
+    - name: Cache Node.js modules
+      uses: actions/cache@v2
+      with:
+        path: ~/.npm
+        key: ${{ runner.OS }}-node-${{ hashFiles('**/package-lock.json') }}
+        restore-keys: |
+          ${{ runner.OS }}-node-
+
     - name: sh
       run: sh ./shell/push_to_cloudrun.sh
+
+    - name: Notify API of success
+      if: success()
+      run: |
+        curl -X POST ${{ env.PUSH_STATUS_WEBHOOK_URL }} \
+          -H "Content-Type: application/json" \
+          -d '{
+            "status": "success",
+            "version": "${{ env.APP_VERSION }}",
+            "message": "Deployment successful"
+          }'
+
+    - name: Notify API of failure
+      if: failure()
+      run: |
+        curl -X POST ${{ env.PUSH_STATUS_WEBHOOK_URL }} \
+          -H "Content-Type: application/json" \
+          -d '{
+            "status": "failure",
+            "version": "${{ env.APP_VERSION }}",
+            "message": "Deployment failed"
+          }'
