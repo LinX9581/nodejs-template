@@ -23,6 +23,10 @@ router.get("/healthz", async function (req, res) {
   res.status(200).send('OK');
 });
 
+router.get("/pod-health", async function (req, res) {
+  res.status(200).send('OK');
+});
+
 router.post("/", async function (req, res) {
   let ifDataExistMsg = "";
   let chack1dayAgoDataSql = "SELECT date FROM traffic.yahoo WHERE date = ?";
