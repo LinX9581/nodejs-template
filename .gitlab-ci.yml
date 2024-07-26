@@ -7,6 +7,7 @@ stages:
 variables:
   GCP_PROJECT_NAME: nownews-analytics
   AR_PROJECT_NAME: nodejs-repo
+  AR_TARGET: asia-docker.pkg.dev
   PROJECT_NAME: nodejs-template
   APP_VERSION: 2.4
   CLOUDRUN_SERVICE: my-service2
