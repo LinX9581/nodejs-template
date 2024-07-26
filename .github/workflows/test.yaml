@@ -40,8 +40,8 @@ jobs:
         restore-keys: |
           ${{ runner.OS }}-node-
 
-    # - name: sh
-    #   run: sh ./shell/push_to_cloudrun.sh
+    - name: sh
+      run: sh ./shell/push_to_cloudrun.sh
 
     - name: Notify API of success
       if: success()

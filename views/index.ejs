@@ -3,35 +3,126 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>
-        <%= title %>
-    </title>
+    <title><%- title.replace(/</g, '&lt;' ).replace( />/g, '&gt;') %></title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+
+        .container {
+            max-width: 500px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .input-group {
+            margin-bottom: 15px;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        button {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        #result {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background-color: #f9f9f9;
+        }
+    </style>
 </head>
 
 <body>
-    2.3
+    <div class="container">
+        <h1><%- title.replace(/</g, '&lt;' ).replace( />/g, '&gt;') %> 1.5</h1>
+        <div class="input-group">
+            <input type="text" id="user-input" placeholder="Enter your query" maxlength="100">
+        </div>
+        <button id="submit-btn">Submit</button>
+        <div id="result"></div>
+    </div>
 
     <script>
-        let begin_date = '2023-01-01'
-        let end_date = '2023-01-01'
-        
-        getData(begin_date, end_date)
-        async function getData() {
-            let data = await fetch('/', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    "begin_date": begin_date,
-                    "end_date": end_date,
-                })
-            }).then(res => res.json())
-            console.log(data)
+        document.getElementById('submit-btn').addEventListener('click', submitQuery);
+
+        async function submitQuery() {
+            const userInput = document.getElementById('user-input').value.trim();
+
+            if (!userInput) {
+                alert('Please enter a query.');
+                return;
+            }
+
+            if (userInput.length > 100) {
+                alert('Query is too long. Please limit to 100 characters.');
+                return;
+            }
+
+            try {
+                const response = await fetch('/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({query: userInput})
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                const data = await response.json();
+                const resultDiv = document.getElementById('result');
+                resultDiv.textContent = ''; // 清空之前的內容
+                const pre = document.createElement('pre');
+                pre.textContent = JSON.stringify(data, null, 2);
+                resultDiv.appendChild(pre);
+            } catch (error) {
+                console.error('Error:', error);
+                const resultDiv = document.getElementById('result');
+                resultDiv.textContent = `Error: An unexpected error occurred. Please try again.`;
+            }
         }
 
+        // 允許用戶使用 Enter 鍵提交
+        document.getElementById('user-input').addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') {
+                submitQuery();
+            }
+        });
     </script>
 </body>
 

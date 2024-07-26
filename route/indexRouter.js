@@ -20,32 +20,39 @@ router.get("/", async function (req, res) {
 });
 
 router.get("/healthz", async function (req, res) {
-  res.status(200).send('OK');
+  res.status(200).send("OK");
 });
 
 router.get("/pod-health", async function (req, res) {
-  res.status(200).send('OK');
+  res.status(200).send("OK");
 });
 
+// 確認環境變數能讓資料庫連線
 router.post("/", async function (req, res) {
-  let ifDataExistMsg = "";
-  let chack1dayAgoDataSql = "SELECT date FROM traffic.yahoo WHERE date = ?";
-  let chack1dayAgoDataData = [req.body.begin_date];
-  let chack1dayAgoData = await query(chack1dayAgoDataSql, chack1dayAgoDataData);
-  if (chack1dayAgoData == "") {
-    console.log("昨日無數據 顯示前天數據");
-    ifDataExistMsg = "-1";
-  } else {
-    let trafficTableSql = `select * from traffic.channel INNER JOIN traffic.referer ON channel.date = referer.date WHERE channel.date BETWEEN ? AND ?`;
-    let trafficTableData = [req.body.begin_date, req.body.end_date];
-    let trafficTable = await query(trafficTableSql, trafficTableData);
+  try {
+    const userInput = req.body.query;
+    console.log(userInput);
+    if (userInput != "12345") {
+      res.json({
+        message: "403",
+      });
+    } else {
+      const sql = "SELECT NOW() AS time;";
+      const result = await query(sql);
 
-    res.send(
-      JSON.stringify({
-        traffic: trafficTable,
-        status: ifDataExistMsg,
-      })
-    );
+      if (result && result.length > 0) {
+        res.json({
+          message: "Database connection successful",
+          time: result[0].time,
+          userInput: userInput, // 回傳用戶輸入，以確認接收
+        });
+      } else {
+        throw new Error("No results returned from database");
+      }
+    }
+  } catch (error) {
+    console.error("Database query error:", error);
+    res.status(500).json({ error: "An error occurred while processing your request" });
   }
 });
 

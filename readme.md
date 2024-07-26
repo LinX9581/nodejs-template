@@ -23,7 +23,7 @@ githubci to ar
 ## Docker
 * build image
 ```
-docker build -t nodejs-template:1.4 . --no-cache
+docker build -t nodejs-template:1.5 .
 ```
 * image to container
 ```
