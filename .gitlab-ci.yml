@@ -9,7 +9,7 @@ variables:
   AR_PROJECT_NAME: nodejs-repo
   PROJECT_NAME: nodejs-template
   APP_VERSION: 2.4
-  CLOUDRUN_SERVICE: my-service1
+  CLOUDRUN_SERVICE: my-service2
 
 # test_job:
 #   image: node:14.18.0
