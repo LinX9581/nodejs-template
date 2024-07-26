@@ -27,7 +27,7 @@ publish_image:
   image: google/cloud-sdk:alpine
   stage: build_image  
   only:
-    - master
+    - main
   services:
     - name: docker:dind
   script:
