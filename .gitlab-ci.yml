@@ -31,7 +31,6 @@ publish_image:
   services:
     - name: docker:dind
   script:
-    - more ./shell/push_to_cloudrun.sh
     - sh ./shell/push_to_cloudrun.sh
 
     # push to private registry
