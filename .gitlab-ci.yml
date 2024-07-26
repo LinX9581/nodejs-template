@@ -5,7 +5,11 @@ stages:
   # - deploy_k8s
 
 variables:
-  NODEJS_APP_VERSION: "3.6"
+  GCP_PROJECT_NAME: nownews-analytics
+  AR_PROJECT_NAME: nodejs-repo
+  PROJECT_NAME: nodejs-template
+  APP_VERSION: 2.4
+  CLOUDRUN_SERVICE: my-service1
 
 # test_job:
 #   image: node:14.18.0
@@ -26,15 +30,9 @@ publish_image:
     - master
   services:
     - name: docker:dind
-  before_script:
-    - gcloud auth activate-service-account --key-file /gitlab-runner/gcloud-auth/nownews-analytics.json
-    - gcloud auth configure-docker --quiet
-    - gcloud config set project nownews-analytics
   script:
-    - echo $NODEJS_APP_VERSION
-    - docker build -t nodejs-template:${NODEJS_APP_VERSION} . --no-cache
-    - docker tag nodejs-template:${NODEJS_APP_VERSION} asia.gcr.io/nownews-analytics/nodejs-template:${NODEJS_APP_VERSION}
-    - docker push asia.gcr.io/nownews-analytics/nodejs-template:${NODEJS_APP_VERSION}
+    - more ./shell/push_to_cloudrun.sh
+    - sh ./shell/push_to_cloudrun.sh
 
     # push to private registry
     # - docker tag nodejs-template registry.linx.website/nodejs-template:${NODEJS_APP_VERSION}
