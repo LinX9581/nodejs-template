@@ -10,12 +10,12 @@ jobs:
   build:
 
     runs-on: self-hosted
-    environment: GAR
+    environment: artifact_registry_taget
     env:
-      GCP_PROJECT_NAME: ${{ vars.GAR }}
+      GCP_PROJECT_NAME: ${{ vars.ARTIFACT_REGISTRY_TAGET_TERRAFORM }}
       AR_PROJECT_NAME: nodejs-repo
       PROJECT_NAME: nodejs-template
-      APP_VERSION: 2.4
+      APP_VERSION: 2.5
       CLOUDRUN_SERVICE: my-service1
 
     strategy:
