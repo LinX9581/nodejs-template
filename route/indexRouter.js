@@ -1,6 +1,7 @@
 import query from "../mysql-connect";
 import express from "express";
 import moment from "moment";
+const { version } = require('../package.json');
 
 // getMysqlUser()
 async function getMysqlUser() {
@@ -13,9 +14,11 @@ let router = express.Router();
 router.get("/", async function (req, res) {
   let title = "Nodejs-Template ";
   let today = new moment().format("YYYY-MM-DD HH:mm:ss");
+
   res.render("index", {
     today,
     title,
+    version
   });
 });
 
