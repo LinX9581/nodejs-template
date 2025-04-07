@@ -16,6 +16,9 @@ COPY . .
 # Build the application if needed (uncomment if you have a build step)
 # RUN yarn build
 
+HEALTHCHECK --interval=30s --timeout=5s --start-period=5s --retries=3 \
+  CMD wget --quiet --tries=1 --spider http://localhost:3011/healthz || exit 1
+
 # Expose the port the app runs on
 EXPOSE 3011
 

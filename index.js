@@ -6,7 +6,6 @@ import './global'
 import indexRouter from './route/indexRouter';
 import reportRouter from './route/reportRouter';
 import healthRouter from './route/healthRouter';
-import { errorHandler } from './component/errorHandler';
 import './schedule/schedule';
 
 const app = express();
