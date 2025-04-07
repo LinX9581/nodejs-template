@@ -49,10 +49,28 @@
             cursor: pointer;
             transition: background-color 0.3s;
             font-size: 16px;
+            margin-right: 5px;
+            margin-bottom: 5px;
         }
 
         button:hover {
             background-color: #0056b3;
+        }
+        
+        button.log-btn {
+            background-color: #28a745;
+        }
+        
+        button.log-btn:hover {
+            background-color: #218838;
+        }
+        
+        button.error-btn {
+            background-color: #dc3545;
+        }
+        
+        button.error-btn:hover {
+            background-color: #c82333;
         }
 
         #result {
@@ -61,6 +79,13 @@
             border: 1px solid #ddd;
             border-radius: 4px;
             background-color: #f9f9f9;
+        }
+        
+        .test-buttons {
+            margin-top: 20px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
         }
     </style>
 </head>
@@ -73,10 +98,18 @@
         </div>
         <button id="submit-btn">Submit</button>
         <div id="result"></div>
+        
+        <div class="test-buttons">
+            <h3>測試日誌功能</h3>
+            <div>
+                <button id="log-error-btn" class="error-btn">產生錯誤日誌</button>
+            </div>
+        </div>
     </div>
 
     <script>
         document.getElementById('submit-btn').addEventListener('click', submitQuery);
+        document.getElementById('log-error-btn').addEventListener('click', createErrorLog);
 
         async function submitQuery() {
             const userInput = document.getElementById('user-input').value.trim();
@@ -117,6 +150,16 @@
             }
         }
 
+        async function createErrorLog() {
+            try {
+                const response = await fetch('/error-test', {
+                    method: 'POST'
+                });
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+        
         // 允許用戶使用 Enter 鍵提交
         document.getElementById('user-input').addEventListener('keypress', function (e) {
             if (e.key === 'Enter') {

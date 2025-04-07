@@ -59,4 +59,13 @@ router.post("/", async function (req, res) {
   }
 });
 
+router.post("/error-test", async function (req, res) {
+  try {
+    throw new Error("This is a test error");
+  } catch (error) {
+    console.error("Error:", error);
+    res.status(500).json({ error: "An error occurred while processing your request" });
+  }
+});
+
 module.exports = router;
